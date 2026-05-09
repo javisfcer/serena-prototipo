@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Serena — Bienestar emocional</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #07080F; min-height: 100%; }
+    body {
+      font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+      color: #ECEDF6;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+      padding: 32px 16px;
+      box-sizing: border-box;
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(110,91,255,0.18), transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(244,180,156,0.10), transparent 55%),
+        #07080F;
+    }
+    @keyframes bubble-in {
+      0%   { opacity: 0; transform: translateY(10px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0)    scale(1);    }
+    }
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.35; transform: translateY(0); }
+      50%      { opacity: 1;    transform: translateY(-2px); }
+    }
+    /* Chat scroll styling */
+    *::-webkit-scrollbar { width: 0; height: 0; }
+    button { font-family: inherit; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="ios-frame.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function Frame() {
+      return (
+        <div style={{
+          width: 402, height: 874, borderRadius: 48, overflow: 'hidden',
+          position: 'relative', background: '#000',
+          boxShadow: '0 40px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,0,0,0.4), inset 0 0 0 2px rgba(255,255,255,0.04)',
+        }}>
+          {/* dynamic island */}
+          <div style={{
+            position: 'absolute', top: 11, left: '50%', transform: 'translateX(-50%)',
+            width: 126, height: 37, borderRadius: 24, background: '#000', zIndex: 50,
+          }}/>
+          {/* status bar */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10 }}>
+            <IOSStatusBar dark={true}/>
+          </div>
+          {/* app content */}
+          <div style={{
+            position: 'absolute', top: 60, left: 0, right: 0, bottom: 0,
+            overflow: 'hidden',
+          }}>
+            <ChatApp/>
+          </div>
+          {/* home indicator */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 60,
+            height: 34, display: 'flex', justifyContent: 'center', alignItems: 'flex-end',
+            paddingBottom: 8, pointerEvents: 'none',
+          }}>
+            <div style={{
+              width: 139, height: 5, borderRadius: 100,
+              background: 'rgba(255,255,255,0.55)',
+            }}/>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Frame/>);
+  </script>
+</body>
+</html>
